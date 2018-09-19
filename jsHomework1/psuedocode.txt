@@ -1,0 +1,20 @@
+1. Create HTML page that user will interact with. HTML page will contain: 
+"Guess what letter I'm thinking of"
+
+"Wins:"
+"Losses:"
+"Guesses Left:" 
+"Your guesses so far:"
+
+2. When the game begins, the computer will choose a random letter
+
+3. When a user presses a key, that key will save to a variable
+
+4. The game will evaluate if the user key equals the letter it choose
+
+5. If the user key matches, the game will increment Wins, and select a new letter, clear other values
+
+6. If the user key does not match, the game will add that key to guesses so far and decrement guesses Left
+
+7. When guesses left = 0 the game will increment Wins
+
