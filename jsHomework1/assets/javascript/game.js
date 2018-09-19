@@ -8,6 +8,7 @@ var computersChoice;
 function start(){
     computersChoice = letters[Math.floor(Math.random() * letters.length)];
     guessesLeft = 5; 
+    guessedSoFar = [];
     console.log("Game started");
     psychic();
 }
@@ -27,8 +28,7 @@ function psychic(){
             guessesLeft--; 
             guessedSoFar.push(userGuess); 
             document.getElementById("left").innerHTML = guessesLeft;
-            document.getElementById("guesses").innerHTML = guessedSoFar;
-            start();
+            document.getElementById("guessed").innerHTML = guessedSoFar;
         }
        } 
        else {
