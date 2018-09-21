@@ -53,15 +53,22 @@ function game(deck){
     Object.keys(deck).forEach(function(key, index){
         console.log(question[index].question);
         $(".question").html(question[index].question);
-        var answers = Object.values(question[index]);
-        Object.keys(answers).forEach(function(key, index){
-            console.log(answers[index]);
+        var answers = Object.values(question[index].answers);
+        for (var text in answers){
+            console.log(text);
             var answerButton = $("<input>")
                 .addClass("radio")
-                .attr({"id": key, "type" : "radio", "value" : answers[index].value, "name": "choice"})                    
-                .html(answers[index].text)
+                .attr({"id": text, "type" : "radio", "value" : answers[text].value, "name": "choice"});
+            $(".choices").append($("<div>")
+            .addClass("radio container")
+            .append(answerButton)
+            .append(
+                $("<label>" )
+                .attr("for", text)
+                .html(answers[text].text)
+            ));
         
-    });
+        };
 })
 };
 
