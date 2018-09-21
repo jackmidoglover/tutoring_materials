@@ -52,10 +52,17 @@ function game(deck){
 
     Object.keys(deck).forEach(function(key, index){
         console.log(question[index].question);
-        $(".question").innerHTML = question;
+        $(".question").html(question[index].question);
         var answers = Object.values(question[index]);
-        console.log(answers);
-    })
+        Object.keys(answers).forEach(function(key, index){
+            console.log(answers[index]);
+            var answerButton = $("<input>")
+                .addClass("radio")
+                .attr({"id": key, "type" : "radio", "value" : answers[index].value, "name": "choice"})                    
+                .html(answers[index].text)
+        
+    });
+})
 };
 
 function choosing(){
