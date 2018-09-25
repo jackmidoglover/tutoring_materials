@@ -20,6 +20,8 @@ var config = {
       var empRole = $("#employeeRole").val().trim();
       var startDate = $("#startDate").val().trim();
       var empRate = $("#rate").val().trim();
+      var momentStartDate = moment(startDate);
+      var empMonths = moment().diff(moment(momentStartDate, "X"), "months");
 
 // Create object to store input data to name value pairs
       var newEmp = {
@@ -34,6 +36,7 @@ var config = {
 
 // a console log to see it going on
       console.log(`Name: ${newEmp.name} Role: ${newEmp.role} Start: ${newEmp.start} Rate: ${newEmp.rate}`);
+      console.log("Moment js working", empMonths);
 
 // Clear inputs
       $("#employeeName").val("");
