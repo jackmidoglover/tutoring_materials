@@ -49,27 +49,12 @@ function game(deck){
         cardTimer--;
     }
     var question = Object.values(deck);
+    var questionList = [];
 
     Object.keys(deck).forEach(function(key, index){
-        console.log(question[index].question);
-        $(".question").html(question[index].question);
-        var answers = Object.values(question[index].answers);
-        for (var text in answers){
-            console.log(text);
-            var answerButton = $("<input>")
-                .addClass("radio")
-                .attr({"id": text, "type" : "radio", "value" : answers[text].value, "name": "choice"});
-            $(".choices").append($("<div>")
-            .addClass("radio container")
-            .append(answerButton)
-            .append(
-                $("<label>" )
-                .attr("for", text)
-                .html(answers[text].text)
-            ));
-        
-        };
+        questionList.push(deck[key]);
 })
+console.log(questionList);
 };
 
 function choosing(){
@@ -79,3 +64,24 @@ function choosing(){
 
 
 start();
+
+
+
+// console.log(question[index].question);
+// $(".question").html(question[index].question);
+// var answers = Object.values(question[index]);
+// for (var text in answers){
+//     console.log(text);
+//     var answerButton = $("<input>")
+//         .addClass("radio")
+//         .attr({"id": text, "type" : "radio", "value" : answers[text].value, "name": "choice"});
+//     $(".choices").append($("<div>")
+//     .addClass("radio container")
+//     .append(answerButton)
+//     .append(
+//         $("<label>" )
+//         .attr("for", text)
+//         .html(answers[text].text)
+//     ));
+
+// };
