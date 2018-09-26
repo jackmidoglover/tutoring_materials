@@ -49,10 +49,6 @@ function game(){
 };
 
 
-function choosing(){
-
-};
-
 function showQuestion(){
     //local variables for each question in the question obj
     var i = 0;
