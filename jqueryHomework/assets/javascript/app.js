@@ -3,7 +3,7 @@ var questions = {
         question: "What class has a sneak attack bonus?",
         answers: {
             a: {text: "Fighter", value: false},
-            b: {text: "Rogue", vale: true},
+            b: {text: "Rogue", value: true},
             c: {text: "Wizard", value: false},
             d: {text: "Mage", value: false}
         }
@@ -39,28 +39,53 @@ function start() {
      wrongs = 0;
      unanswereds = 0;
      cardTimer = 16;
-    game(questions);
+    game();
 }
 
-function game(deck){
-    console.log("game initiated" + deck);
-
-    function decrement(){
-        cardTimer--;
-    }
-    var question = Object.values(deck);
-    var questionList = [];
-
-    Object.keys(deck).forEach(function(key, index){
-        questionList.push(deck[key]);
-})
-console.log(questionList);
+function game(){
+    console.log("game initiated");
+    showQuestion();
+   
 };
+
 
 function choosing(){
 
 };
 
+function showQuestion(){
+    //local variables for each question in the question obj
+    var i = 0;
+    var questionObj = Object.keys(questions);
+    var questionText = questions[questionObj[i]].question;
+    var answerObj = Object.keys(questions[questionObj[i]].answers);
+    var answerText = questions[questionObj[i]].answers;
+
+    // forEach loops through the answers object within the question obj
+    // creates an answer button and appends to page
+    answerObj.forEach(function(key){
+        console.log(answerText[key].text);
+        console.log(answerText[key].value);
+        var answerButton = $("<input>")
+        .addClass("radio").attr({
+            "id": key,
+            "type": "radio",
+            "value": answerText[key].value,
+            "name": key
+        });
+        $(".choices").append($("<div>")
+        .addClass("radio container")
+        .append(answerButton)
+        .append(
+            $("<label>")
+            .attr("for", key)
+            .html(answerText[key].text)
+        )
+        );
+    });
+    $(".question").html(questionText);
+  
+};
 
 
 start();
