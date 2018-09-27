@@ -27,31 +27,61 @@ var questions = {
         }
     }
 }; 
+
 var rights = 0;
 var wrongs = 0; 
 var unanswereds= 0;
-var cardTimer = 16;
 var intervalID;
 
-function start() {
-    console.log("Game started");
-     rights = 0;
-     wrongs = 0;
-     unanswereds = 0;
-     cardTimer = 16;
-    game();
-}
-
 function game(){
+
+    var cardTimer = 16;
+    var i = 0;
     console.log("game initiated");
-    showQuestion();
+    timer(cardTimer);
+    showQuestion(i);
+    $(document).on("click", "input", function(){
+        var choice = $(this); 
+        var choiceValue = choice[0].value;
+        console.log(choiceValue);
+    
+        if (choiceValue == "true"){
+            console.log("true evaluating correctly")
+            rights++; 
+            i++; 
+            console.log(i);
+            clearCard();
+            if(i <= Object.keys(questions).length -1){
+            timer(cardTimer);
+            showQuestion(i);
+            }
+            else {
+            showResults();
+            }
+        }
+        else if (choiceValue == "false") {
+            wrongs++;
+            console.log("false evaluating correctly", wrongs);
+            i++;
+            clearCard();
+            if(i <= Object.keys(questions).length -1){
+            timer(cardTimer);
+            showQuestion(i);
+            }
+            else {
+                showResults();
+            }
+        }
+    });
+
    
 };
 
+// function that will loop through questions object and print question text and answers to page 
+// inside questionCard with radio button for choices
+function showQuestion(i){
 
-function showQuestion(){
     //local variables for each question in the question obj
-    var i = 0;
     var questionObj = Object.keys(questions);
     var questionText = questions[questionObj[i]].question;
     var answerObj = Object.keys(questions[questionObj[i]].answers);
@@ -60,8 +90,6 @@ function showQuestion(){
     // forEach loops through the answers object within the question obj
     // creates an answer button and appends to page
     answerObj.forEach(function(key){
-        console.log(answerText[key].text);
-        console.log(answerText[key].value);
         var answerButton = $("<input>")
         .addClass("radio").attr({
             "id": key,
@@ -83,26 +111,32 @@ function showQuestion(){
   
 };
 
+function clearCard(){
+    $(".question").html("");
+    $(".choices").html("");
+}
 
-start();
+function showResults(){
+    var line = $("<p>");
+            var rightAnswers = `You got ${rights} answers correct!`; 
+            var wrongAnswers = `You got ${wrongs} answers incorrect!`;
+            $(".question").html("Game over!");
+            $(".choices").html(`
+            <div class="col-md-12">
+            <p> ${rightAnswers} </p>
+            <br>
+            <p> ${wrongAnswers} </p>
+            </div>`);
+}
 
+function timer(clock){
+    clearInterval(intervalID);
+    intervalID = setInterval(decrement, 1000);
 
+    function decrement(){
+        clock--;
+        $(".timer").html(`<h3> ${clock} </h3>`);
+    };
+};
 
-// console.log(question[index].question);
-// $(".question").html(question[index].question);
-// var answers = Object.values(question[index]);
-// for (var text in answers){
-//     console.log(text);
-//     var answerButton = $("<input>")
-//         .addClass("radio")
-//         .attr({"id": text, "type" : "radio", "value" : answers[text].value, "name": "choice"});
-//     $(".choices").append($("<div>")
-//     .addClass("radio container")
-//     .append(answerButton)
-//     .append(
-//         $("<label>" )
-//         .attr("for", text)
-//         .html(answers[text].text)
-//     ));
-
-// };
+game();
