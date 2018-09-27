@@ -32,10 +32,10 @@ var rights = 0;
 var wrongs = 0; 
 var unanswereds= 0;
 var intervalID;
+var cardTimer = 16;
 
 function game(){
 
-    var cardTimer = 16;
     var i = 0;
     console.log("game initiated");
     timer(cardTimer);
@@ -44,33 +44,46 @@ function game(){
         var choice = $(this); 
         var choiceValue = choice[0].value;
         console.log(choiceValue);
-    
-        if (choiceValue == "true"){
-            console.log("true evaluating correctly")
-            rights++; 
-            i++; 
-            console.log(i);
-            clearCard();
-            if(i <= Object.keys(questions).length -1){
-            timer(cardTimer);
-            showQuestion(i);
+        if(cardTimer > 0){
+            if (choiceValue == "true"){
+                console.log("true evaluating correctly")
+                rights++; 
+                i++; 
+                console.log(i);
+                clearCard();
+                if(i <= Object.keys(questions).length -1){
+                timer();
+                showQuestion(i);
+                }
+                else {
+                showResults();
+                }
             }
-            else {
-            showResults();
+            else if (choiceValue == "false") {
+                wrongs++;
+                console.log("false evaluating correctly", wrongs);
+                i++;
+                clearCard();
+                if(i <= Object.keys(questions).length -1){
+                timer();
+                showQuestion(i);
+                }
+                else {
+                    showResults();
+                }
             }
         }
-        else if (choiceValue == "false") {
-            wrongs++;
-            console.log("false evaluating correctly", wrongs);
+        else if (cardTimer === 0){
+            unanswereds++;
             i++;
-            clearCard();
-            if(i <= Object.keys(questions).length -1){
-            timer(cardTimer);
-            showQuestion(i);
+            if (i <= Object.keys(questions).length -1){
+                timer();
+                showQuestion(i);
             }
             else {
                 showResults();
             }
+           
         }
     });
 
@@ -129,13 +142,13 @@ function showResults(){
             </div>`);
 }
 
-function timer(clock){
+function timer(){
     clearInterval(intervalID);
-    intervalID = setInterval(decrement, 1000);
+    intervalID = setInterval(decrement, 500);
 
     function decrement(){
-        clock--;
-        $(".timer").html(`<h3> ${clock} </h3>`);
+        cardTimer--;
+        $(".timer").html(`<h3> ${cardTimer} </h3>`);
     };
 };
 
